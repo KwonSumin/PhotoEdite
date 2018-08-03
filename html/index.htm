@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    div#app_container div{position : relative;}
+    div#app_container .header{border : 1px solid black; width : 100%; height : 150px;}
+    div#app_container .content{border : 1px solid black; width : 100%; height : 700px;}
+    div#app_container .left_sidemenu{border : 1px solid black; height : 100%; width : 200px;float : left}
+    div#app_container .bottom_nav{border : 1px solid black; height : 200px; width : 100%;clear : left;}
+    div#app_container .pageWrapper{margin-left : 200px; height : 100%}
+    div#app_container .main_page{width : 300px;height : 300px; background-color : #eee;left : 35%;top : 35%;}
+    .box {width : 100%;height : 40px; background-color : red;}
+    #upload_menu_container .upload_menu{display : inline-block;width : calc(100% / 3 - 2px);height : 70px; border : 1px solid black;}
+    #upload_menu_container .submenu{width : 100%;height : 40px;border : 1px solid black;}
+    #upload_menu_container #img_preview{width : 100%;height : 500px; background-color : #ddd;overflow-y : scroll;}
+    #upload_menu_container .upload_btn{background-color : #def; width : 199px; height : 89px;}
+    .previewWrapper{width : 100%;height : 100px;background-color:yellow;}
+  </style>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="C:\Users\14d00400\Desktop\workspace\js\imgEdite.js"></script>
+</head>
+<body>
+  <div id="app_container" class="editor_container">
+    <div class="header">header</div>
+    <div class="content">
+      <div class="left_sidemenu">
+        <div id="upload_menu_container">
+          <span class="upload_menu">메뉴1</span><span class="upload_menu">메뉴2</span><span class="upload_menu">메뉴3</span>
+          <div class="submenu">
+          </div>
+          <div id="img_preview" sm-act="img_preview">
+              <div class="previewWrapper">
+                <div class="preview_header"><span>X</span></div>
+                <div class="imgWrapper"></div>
+              </div>
+          </div>
+          <div class="upload_btn" sm-act="img_upload"></div>
+        </div>
+      </div>
+      <div class="pageWrapper">
+        <div class="main_page" >page</div>
+      </div>
+      <div class="bottom_nav">nav</div>
+    </div>
+  </div>
+
+<script>
+  var $img = $('<img>');
+  var $page = $('.main_page');
+  $page.on('dragover',function(ev){
+    ev.preventDefault();
+  });
+  $img.on('dragstart',function(ev){
+    console.log('dragStart')
+    ev.originalEvent.dataTransfer.setData('src',this.src);
+  })
+  $page.on('drop',function(ev){
+    console.log('drop');
+    console.log(ev);
+    var src = ev.originalEvent.dataTransfer.getData('src');
+    $(this).attr('src',src);
+  })
+  var app = new PreviewImg({
+    target : $('#app_container'),
+    element : {
+      img : $img
+    }
+  });
+  $(document).ready(function(){
+    //app.init();
+  })
+
+
+</script>
+</body>
+</html>
