@@ -184,7 +184,6 @@ class BasicDragEvent {
     }
     
     eventInit(){
-        alert('init');
         var $container = this.props.target;
         var $startElements = $container.find('[sm-drg="start"]');
         var $dropElements = $container.find('[sm-drg="drop"]');
