@@ -171,3 +171,41 @@ class ImgInfo{
     return this.name;
   }
 }
+
+
+class BasicDragEvent {
+    constructor(props){
+        this.props = props;
+        this.eventInit();
+        var app = this;
+        props.target.on('DOMNodeInserted',function(){
+            app.eventInit();
+        });
+    }
+    
+    eventInit(){
+        alert('init');
+        var $container = this.props.target;
+        var $startElements = $container.find('[sm-drg="start"]');
+        var $dropElements = $container.find('[sm-drg="drop"]');
+        var dataKey = this.props.dataKey;
+        
+        $startElements.on('dragstart',startEvent);
+        $dropElements.on('dragover',dragOver);
+        $dropElements.on('drop',dropEvent);
+        
+        function startEvent(ev){
+            console.log('dragStart');
+            var data = $(this).attr(dataKey);
+            ev.originalEvent.dataTransfer.setData(dataKey,data);
+        }
+        function dragOver(ev){
+            ev.preventDefault();
+        }
+        function dropEvent(ev){
+            $(this).attr(dataKey,ev.originalEvent.dataTransfer.getData(dataKey));
+        }
+        
+    }
+    
+}
